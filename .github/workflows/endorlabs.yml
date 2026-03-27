@@ -38,9 +38,11 @@ jobs:
       if: github.event_name == 'pull_request'
       uses: endorlabs/github-action@b8992820cc4d9c9e7ded5022adf6cabe2dc11946
       with:
-        namespace: "endor-solutions-ypulse.github-app" # Modify the namespace to your Endor Labs tenant namespace.
+        namespace: "endor-solutions-ypulse.github-app"
         scan_dependencies: true
         pr: true
+        pr_incremental: true  # only scan changed deps (faster)
+        additional_args: "--quick-scan"  # skip call graph / reachability analysis for faster PR scans
         enable_pr_comments: true
         github_token: ${{ secrets.GITHUB_TOKEN }}  # auto-provisioned by GitHub
         sarif_file: findings.sarif
